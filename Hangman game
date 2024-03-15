@@ -1,0 +1,99 @@
+import random
+
+
+
+def ChooseWord():
+
+    Words = ["python", "hangman", "programming", "challenge", "developer", "coding"]
+
+    return random.choice(Words)
+
+
+
+def DisplayWord(Word, GuessedLetters):
+
+    Display = ""
+
+    for Letter in Word:
+
+        if Letter in GuessedLetters:
+
+            Display += Letter
+
+        else:
+
+            Display += "_"
+
+    return Display
+
+
+
+def Hangman():
+
+    MaxAttempts = 6
+
+    WordToGuess = ChooseWord()
+
+    GuessedLetters = set()
+
+    IncorrectGuesses = 0
+
+
+
+    print("Welcome to Hangman !")
+
+    print(DisplayWord(WordToGuess, GuessedLetters))
+
+
+
+    while "_" in DisplayWord(WordToGuess, GuessedLetters) and IncorrectGuesses < MaxAttempts:
+
+        Guess = input("Guess a letter : ").lower()
+
+
+
+        if len(Guess) != 1 or not Guess.isalpha():
+
+            print("Please Enter a Single Alphabetical Character.")
+
+            continue
+
+
+
+        if Guess in GuessedLetters:
+
+            print("You already guessed that letter.")
+
+            continue
+
+
+
+        GuessedLetters.add(Guess)
+
+
+
+        if Guess not in WordToGuess:
+
+            IncorrectGuesses += 1
+
+            print(f"Incorrect Guesses: {IncorrectGuesses}/{MaxAttempts}")
+
+
+
+        print(DisplayWord(WordToGuess, GuessedLetters))
+
+
+
+    if "_" not in DisplayWord(WordToGuess, GuessedLetters):
+
+        print("Congratulations! You guessed the word.")
+
+    else:
+
+        print(f"Sorry, you ran out of attempts. The word was: {WordToGuess}")
+
+
+
+if __name__ == "__main__":
+
+    Hangman()
